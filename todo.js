@@ -83,7 +83,7 @@ function addTask(){
         if(span.classList.contains("completed")){
             completedTasks--;
         }
-
+        deleteTaskFromServer(li.dataset.todoId);
         li.remove();
         updateTaskCount();
         updateAchievements();
@@ -243,7 +243,8 @@ async function loadTodos() {
     deleteBtn.classList.add("delete-btn");
 
     deleteBtn.addEventListener("click", function () {
-      li.remove();
+        deleteTaskFromServer(todo.todo_id);
+        li.remove();
       updateTaskCount();
     });
 
@@ -275,3 +276,8 @@ async function updateTaskOnServer(todoId, isCompleted) {
   });
 }
 
+async function deleteTaskFromServer(todoId) {
+  await fetch(`${API_URL}/${todoId}`, {
+    method: "DELETE"
+  });
+}
